@@ -7,37 +7,40 @@ inputEnd = int(inputSplit[1])
 okSetA = set()
 okSetB = set()
 
+
 def checkNeighbourA(num):
     listDigit = [int(d) for d in str(num)]
-    for ind in range(0,5):
-        if listDigit[ind] == listDigit[ind+1]:
-            return True
-
-    return False         
-
-def checkNeighbourB(num):
-    listDigit = [int(d) for d in str(num)]
-    for ind in range(0,4):
-        if listDigit[ind] == listDigit[ind+1]:
-            if listDigit[ind] == listDigit[ind+2]:
-                return False
-            else:
-                #print(f"neightbour ok: {num}")
-                return True
-
-    return False                     
-
-def checkDecrasing(num):
-    listDigit = [int(d) for d in str(num)]
     for ind in range(0, 5):
-        print(f"checking: {listDigit[ind]} {listDigit[ind+1]}")
-        if listDigit[ind] > listDigit[ind+1]:
+        if listDigit[ind] == listDigit[ind + 1]:
             return True
 
     return False
 
 
-#for num in range(inputStart, inputEnd+1):
+def checkNeighbourB(num):
+    listDigit = [int(d) for d in str(num)]
+    for ind in range(0, 4):
+        if listDigit[ind] == listDigit[ind + 1]:
+            if listDigit[ind] == listDigit[ind + 2]:
+                return False
+            else:
+                # print(f"neightbour ok: {num}")
+                return True
+
+    return False
+
+
+def checkDecrasing(num):
+    listDigit = [int(d) for d in str(num)]
+    for ind in range(0, 5):
+        print(f"checking: {listDigit[ind]} {listDigit[ind+1]}")
+        if listDigit[ind] > listDigit[ind + 1]:
+            return True
+
+    return False
+
+
+# for num in range(inputStart, inputEnd+1):
 #    neigbourA = checkNeighbourA(num)
 #    neigbourB = checkNeighbourB(num)
 #    decreasing = checkDecrasing(num)
@@ -49,7 +52,7 @@ def checkDecrasing(num):
 #       okSetB.add(num)
 
 print(f"The answer to part A is (511): {len(okSetA)}")
-print(f"The answer to part B is: {len(okSetB)}") # larger than 229
+print(f"The answer to part B is: {len(okSetB)}")  # larger than 229
 # Test
 test1 = "111111"
 neighbour = checkNeighbourA(test1)
@@ -76,9 +79,11 @@ neighbour5 = checkNeighbourB(test5)
 dec5 = checkDecrasing(test4)
 ok5 = neighbour5 and not dec5
 
-#print(f"{test1} digits in this string has the same value as their neigbour: {neighbour}")
-#print(f"{test1} this string is valid: {ok}")
-#print(f"{test2} neightbour false: {neighbour2}, decrasing should be false: {dec2}, this string false: {ok2}")
-#print(f"{test3} should be true: {ok3}")
-#print(f"{test4} neightbour ok: {neighbour4}, decrasing should be true: {dec4}, this string false: {ok4}")
-print(f"{test5} neightbour ok: {neighbour5}, decrasing should be false: {dec5}, this string false: {ok5}")
+# print(f"{test1} digits in this string has the same value as their neigbour: {neighbour}")
+# print(f"{test1} this string is valid: {ok}")
+# print(f"{test2} neightbour false: {neighbour2}, decrasing should be false: {dec2}, this string false: {ok2}")
+# print(f"{test3} should be true: {ok3}")
+# print(f"{test4} neightbour ok: {neighbour4}, decrasing should be true: {dec4}, this string false: {ok4}")
+print(
+    f"{test5} neightbour ok: {neighbour5}, decrasing should be false: {dec5}, this string false: {ok5}"
+)
