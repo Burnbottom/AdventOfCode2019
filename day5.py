@@ -14,10 +14,10 @@ def opCodeOperator(data, firstPosUpdate=None, secondPosUpdate=None, input=None):
     if secondPosUpdate != None:
         inputData[2] = secondPosUpdate
 
-    instructionStartIndex = 0
+    instStartInd = 0
 
-    while inputData[instructionStartIndex] != 99:
-        instruction = inputData[instructionStartIndex]
+    while inputData[instStartInd] != 99:
+        instruction = inputData[instStartInd]
 
         opCode = instruction % 100
         modeFirst = instruction // 100 % 10
@@ -25,71 +25,67 @@ def opCodeOperator(data, firstPosUpdate=None, secondPosUpdate=None, input=None):
         modeThird = instruction // 10000 % 10
 
         position1 = (
-            inputData[instructionStartIndex + 1]
-            if modeFirst == Position
-            else instructionStartIndex + 1
+            inputData[instStartInd + 1] if modeFirst == Position else instStartInd + 1
         )
         position2 = (
-            inputData[instructionStartIndex + 2]
-            if modeSecond == Position
-            else instructionStartIndex + 2
+            inputData[instStartInd + 2] if modeSecond == Position else instStartInd + 2
         )
 
         if opCode == 1:  # adding
             position3 = (
-                inputData[instructionStartIndex + 3]
+                inputData[instStartInd + 3]
                 if modeThird == Position
-                else instructionStartIndex + 3
+                else instStartInd + 3
             )
             inputData[position3] = inputData[position1] + inputData[position2]
-            instructionStartIndex += 4
+            instStartInd += 4
         elif opCode == 2:  # multiplying
             position3 = (
-                inputData[instructionStartIndex + 3]
+                inputData[instStartInd + 3]
                 if modeThird == Position
-                else instructionStartIndex + 3
+                else instStartInd + 3
             )
             inputData[position3] = inputData[position1] * inputData[position2]
-            instructionStartIndex += 4
+            instStartInd += 4
         elif opCode == 3:  # insert
             inputData[position1] = input
-            instructionStartIndex += 2
+            instStartInd += 2
         elif opCode == 4:  # output
             output.append(inputData[position1])
-            instructionStartIndex += 2
+            instStartInd += 2
 
         elif opCode == 5:  # Jump if true
             if inputData[position1] != 0:
-                instructionStartIndex = inputData[position2]
+                instStartInd = inputData[position2]
             else:
-                instructionStartIndex += 3
+                instStartInd += 3
         elif opCode == 6:  # Jump if false
             if inputData[position1] == 0:
-                instructionStartIndex = inputData[position2]
+                instStartInd = inputData[position2]
             else:
-                instructionStartIndex += 3
+                instStartInd += 3
         elif opCode == 7:
             position3 = (
-                inputData[instructionStartIndex + 3]
+                inputData[instStartInd + 3]
                 if modeThird == Position
-                else instructionStartIndex + 3
+                else instStartInd + 3
             )
             if inputData[position1] < inputData[position2]:
                 inputData[position3] = 1
             else:
                 inputData[position3] = 0
-            instructionStartIndex += 4
+            instStartInd += 4
         elif opCode == 8:
             position3 = (
-                inputData[instructionStartIndex + 3]
+                inputData[instStartInd + 3]
                 if modeThird == Position
-                else instructionStartIndex + 3
+                else instStartInd + 3
             )
             if inputData[position1] == inputData[position2]:
                 inputData[position3] = 1
             else:
                 inputData[position3] = 0
-            instructionStartIndex += 4
+            instStartInd += 4
         else:
             raise ValueError(f"Unknown opCode: {opCode}")
 
