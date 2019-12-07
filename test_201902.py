@@ -1,5 +1,5 @@
 import unittest
-from day2A import opCodeOperator
+from day2 import opCodeOperator
 from itertools import product
 
 
@@ -49,3 +49,7 @@ class TestMethods(unittest.TestCase):
             if opCodeOperator(inputList, noun, verb)[0] == 19690720:
                 self.assertEqual(71, noun)
                 self.assertEqual(95, verb)
+
+
+if __name__ == "__main__":
+    unittest.main()
