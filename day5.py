@@ -3,20 +3,26 @@ from enum import Enum
 Position = 0
 Immediate = 1
 
-# Return a tuple of (successfulRunCodes, modified inputData)
+
 def opCodeOperator(
-    data, firstPosUpdate=None, secondPosUpdate=None, input1=None, input2=None
+    data,
+    firstPosUpdate=None,
+    secondPosUpdate=None,
+    input1=None,
+    input2=None,
+    initalized=False,
+    instStartInd=None,
 ):
     output = []
     inputData = data.copy()
-    hasInit = False
 
     if firstPosUpdate != None:
         inputData[1] = firstPosUpdate
     if secondPosUpdate != None:
         inputData[2] = secondPosUpdate
 
-    instStartInd = 0
+    if instStartInd == None:
+        instStartInd = 0
 
     while inputData[instStartInd] != 99:
         instruction = inputData[instStartInd]
@@ -53,8 +59,8 @@ def opCodeOperator(
             if input2 == None:
                 tmp = input1
             else:
-                if hasInit == False:
-                    hasInit = True
+                if initalized == False:
+                    initalized = True
                     tmp = input1
                 else:
                     tmp = input2
@@ -63,7 +69,8 @@ def opCodeOperator(
         elif opCode == 4:  # output
             output.append(inputData[position1])
             instStartInd += 2
-
+            if input2 is not None:
+                return [output, inputData, instStartInd]
         elif opCode == 5:  # Jump if true
             if inputData[position1] != 0:
                 instStartInd = inputData[position2]
@@ -98,8 +105,9 @@ def opCodeOperator(
             instStartInd += 4
         else:
             raise ValueError(f"Unknown opCode: {opCode}")
-
-    return (output, (inputData, instStartInd))
+    instStartInd = -1
+    print("halting")
+    return [output, inputData, instStartInd]
 
 
 def main():
