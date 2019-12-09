@@ -4,10 +4,6 @@ from day5 import opCodeOperator, getLastVal
 from itertools import permutations
 
 
-class Amplifier():
-    
-
-
 def withPermutation(permutation, inputData):
     if not isinstance(permutation, list):
         permutation = list(permutation)
