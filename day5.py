@@ -6,8 +6,8 @@ def main():
     inputData = [int(d) for d in inputData.split(",")]
     inputA = inputData.copy()
     inputB = inputData.copy()
-    print(f"answer part 1: {getLastVal(Computer(inputA).run(input=1))}")
-    print(f"answer part 2: {getLastVal(Computer(inputB).run(input=5))}")
+    print(f"answer part 1: {getLastVal(Computer(inputA).run(input=1))[-1]}")
+    print(f"answer part 2: {getLastVal(Computer(inputB).run(input=5))[-1]}")
 
 
 if __name__ == "__main__":
