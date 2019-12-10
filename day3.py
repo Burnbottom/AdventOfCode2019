@@ -1,9 +1,5 @@
 import numpy as np
 
-input = open("data3.txt", "r")
-mapOfWire = {}
-wire_id = 1
-
 
 def calculateManhattanDistance(intersectPoint):
     return abs(intersectPoint[0] - 0) + abs(intersectPoint[1] - 0)
@@ -83,11 +79,16 @@ def parseWire(wire):
                     mapOfWire[coord] = setOfWire
 
 
+input = open("data3.txt", "r")
+mapOfWire = {}
+wire_id = 1
 for wire in input:
     wire = wire.strip("\n")
     # print("this is wire number: " + str(wire_id))
     parseWire(wire)
     wire_id += 1
+
+input.close()
 
 intersectingCoordinates = set()
 for k, v in mapOfWire.items():
