@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def getLastVal(genIter):
     last = None
     for e in genIter:
@@ -7,26 +8,26 @@ def getLastVal(genIter):
     return last
 
 
-def createDict(string):
-    defDict = defaultdict(list)
-    for idx, val in enumerate(string):
-        defDict[idx] = val
-    return defDict
-
 class Computer:
     def __init__(self, data):
         self.ptr = 0
-        self.data = data [:]
+        self.data = defaultdict(int, enumerate(data))
         self.output = []
         self.base = 0
 
-    def getVal(self, val, mode):  # relative 2 intermediate 1, position 0
+    def getInd(self, index, mode):  # relative 2 intermediate 1, position 0
         if mode == 0:
-            return self.data[val]
+            return self.data[index]
         elif mode == 1:
-            return val
+            return index
+        elif mode == 2:
+            return self.data[self.ptr] + self.base
         else:
-            return self.data[self.base + val]
+            raise ValueError(f"Unknown mode: {mode}")
+
+    def getVal(self, val, mode):
+        tmp = self.getInd(val, mode)
+        return self.data[tmp]
 
     def add(self, param1, param2):
         return param1 + param2
@@ -34,7 +35,7 @@ class Computer:
     def multiply(self, param1, param2):
         return param1 * param2
 
-    def run(self, input_queue):
+    def run(self, input_queue=None):
         while True:
             instr = self.data[self.ptr]
             opCode = instr % 100
@@ -42,8 +43,9 @@ class Computer:
             modeSecond = instr // 1000 % 10
             modeThird = instr // 10000 % 10
 
-            # print(self.data)
-            # print(f"prt: {self.ptr}, instr {instr}")
+            print(self.data)
+            print(self.output)
+            print(f"prt: {self.ptr}, instr {instr}, rel ptr: {self.base}")
             if opCode == 99:
                 break
             elif opCode == 1:  # addition
@@ -60,10 +62,14 @@ class Computer:
                 self.ptr += 4
             elif opCode == 3:  # insert
                 pos = self.getVal(self.ptr + 1, modeFirst)
+                if pos < 0:
+                    raise IndexError("Tried to read out of memory")
                 self.data[pos] = input_queue.popleft()
                 self.ptr += 2
             elif opCode == 4:  # output
                 pos = self.getVal(self.ptr + 1, modeFirst)
+                if pos < 0:
+                    raise IndexError("Tried to read out of memory")
                 self.output.append(self.data[pos])
                 self.ptr += 2
                 yield self.output[-1]
@@ -94,7 +100,7 @@ class Computer:
                 self.data[pos] = 1 if self.data[arg1] == self.data[arg2] else 0
                 self.ptr += 4
             elif opCode == 9:
-                self.base = self.base + self.getVal(self.ptr + 1, modeFirst)
+                self.base += self.getVal(self.ptr + 1, modeFirst)
                 self.ptr += 2
             else:
                 raise ValueError(f"Unknown opCode: {opCode}")
