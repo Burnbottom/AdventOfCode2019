@@ -10,7 +10,6 @@ class Computer:
         self.ptr = 0
         self.data = data[:]
         self.output = []
-        self.init = False
 
     def getVal(self, val, mode):  # intermediate 1, position 0
         return val if mode else self.data[val]
@@ -21,7 +20,7 @@ class Computer:
     def multiply(self, param1, param2):
         return param1 * param2
 
-    def run(self, init=None, input=None):
+    def run(self, input_queue):
         while True:
             instr = self.data[self.ptr]
             opCode = instr % 100
@@ -47,17 +46,13 @@ class Computer:
                 self.ptr += 4
             elif opCode == 3:  # insert
                 pos = self.getVal(self.ptr + 1, modeFirst)
-                if not self.init:
-                    self.data[pos] = init
-                    self.init = True
-                else:
-                    self.data[pos] = input
+                self.data[pos] = input_queue.popleft()
                 self.ptr += 2
             elif opCode == 4:  # output
                 pos = self.getVal(self.ptr + 1, modeFirst)
                 self.output.append(self.data[pos])
                 self.ptr += 2
-                yield self.output
+                yield self.output[-1]
             elif opCode == 5:  # jump if true
                 arg1 = self.getVal(self.ptr + 1, modeFirst)
                 if self.data[arg1] != 0:
