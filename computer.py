@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 def getLastVal(genIter):
     last = None
     for e in genIter:
@@ -5,14 +7,26 @@ def getLastVal(genIter):
     return last
 
 
+def createDict(string):
+    defDict = defaultdict(list)
+    for idx, val in enumerate(string):
+        defDict[idx] = val
+    return defDict
+
 class Computer:
     def __init__(self, data):
         self.ptr = 0
-        self.data = data[:]
+        self.data = data [:]
         self.output = []
+        self.base = 0
 
-    def getVal(self, val, mode):  # intermediate 1, position 0
-        return val if mode else self.data[val]
+    def getVal(self, val, mode):  # relative 2 intermediate 1, position 0
+        if mode == 0:
+            return self.data[val]
+        elif mode == 1:
+            return val
+        else:
+            return self.data[self.base + val]
 
     def add(self, param1, param2):
         return param1 + param2
@@ -79,5 +93,8 @@ class Computer:
                 pos = self.getVal(self.ptr + 3, modeThird)
                 self.data[pos] = 1 if self.data[arg1] == self.data[arg2] else 0
                 self.ptr += 4
+            elif opCode == 9:
+                self.base = self.base + self.getVal(self.ptr + 1, modeFirst)
+                self.ptr += 2
             else:
                 raise ValueError(f"Unknown opCode: {opCode}")

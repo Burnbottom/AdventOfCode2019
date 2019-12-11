@@ -1,4 +1,4 @@
-from computer import Computer
+from computer import Computer, createDict
 from itertools import permutations
 from collections import deque
 
@@ -48,5 +48,5 @@ print(f"part A: {a}")
 
 
 b = max(feedback(data, permutation) for permutation in permutations(range(5, 10)))
+print(f"part B: {b}")
 
-print(f"part B: {b}")  # 86129529 to low

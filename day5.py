@@ -1,4 +1,5 @@
 from computer import Computer, getLastVal
+from collections import deque
 
 
 def main():
@@ -6,8 +7,8 @@ def main():
     inputData = [int(d) for d in inputData.split(",")]
     inputA = inputData.copy()
     inputB = inputData.copy()
-    print(f"answer part 1: {getLastVal(Computer(inputA).run(input=1))[-1]}")
-    print(f"answer part 2: {getLastVal(Computer(inputB).run(input=5))[-1]}")
+    print(f"answer part 1: {next(Computer(inputA).run(deque([1])))}")
+    print(f"answer part 2: {next(Computer(inputB).run(deque([5])))}")
 
 
 if __name__ == "__main__":
