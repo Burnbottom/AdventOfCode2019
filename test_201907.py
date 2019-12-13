@@ -1,7 +1,7 @@
 import unittest
 from itertools import permutations
 from day7 import amplifier, feedback
-from computer import Computer, createDict
+from computer import Computer
 
 
 class TestMethods(unittest.TestCase):

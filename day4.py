@@ -23,8 +23,6 @@ def findOkNeigbour(numbers, exact=False):
 
 
 def main():
-    result = findOkNeigbour(tmp, True)
-    print(f"resut : {result}")
     numbers = []
 
     # create list of ints with data

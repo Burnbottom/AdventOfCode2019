@@ -43,9 +43,9 @@ class Computer:
             modeSecond = instr // 1000 % 10
             modeThird = instr // 10000 % 10
 
-            #print(self.data)
-            #print(self.output)
-            #print(f"prt: {self.ptr}, instr {instr}, rel ptr: {self.base}")
+            # print(self.data)
+            # print(self.output)
+            # print(f"prt: {self.ptr}, instr {instr}, rel ptr: {self.base}")
             if opCode == 99:
                 break
             elif opCode == 1:  # addition
@@ -64,17 +64,15 @@ class Computer:
                 pos = self.getInd(self.ptr + 1, modeFirst)
                 if pos < 0:
                     raise IndexError("Tried to read out of memory")
-                self.data[pos] = input_queue #input_queue.popleft()
+                self.data[pos] = input_queue  # input_queue.popleft()
                 self.ptr += 2
             elif opCode == 4:  # output
                 pos = self.getInd(self.ptr + 1, modeFirst)
                 if pos < 0:
                     raise IndexError("Tried to read out of memory")
                 self.output.append(self.data[pos])
-                print(self.output[-1])
                 self.ptr += 2
-                #yield self.output[-1]
-                #self.ptr += 2
+                yield self.output[-1]
             elif opCode == 5:  # jump if true
                 arg1 = self.getVal(self.ptr + 1, modeFirst)
                 if arg1 != 0:

@@ -1,7 +1,7 @@
-from itertools import combinations
+from itertools import combinations, count
 import math
 
-
+# [int(x) for x in findall(r'-?\d+', line)]
 def calcVel(pos1, pos2):
     val1 = 0
     val2 = 0
@@ -14,7 +14,7 @@ def calcVel(pos1, pos2):
     return (val1, val2)
 
 
-def updateVel(firstMoon, secondMoon):
+def applyGravity(firstMoon, secondMoon):
     x1, x2 = calcVel(firstMoon.xPos, secondMoon.xPos)
     firstMoon.xVel += x1
     secondMoon.xVel += x2
@@ -45,7 +45,7 @@ def calctotEnergy(steps, moonList):
     for _ in range(steps):
         comb = combinations(range(len(moonList)), 2)
         for c in comb:
-            updateVel(moonList[c[0]], moonList[c[1]])
+            applyGravity(moonList[c[0]], moonList[c[1]])
 
         for moon in moonList:
             updatePos(moon)
@@ -97,15 +97,19 @@ a = calctotEnergy(1000, moonList.copy())
 print(f"Part A: {a}")
 
 """
-while True:
-    comb = combinations(range(len(moonList)), 2)
-    origValues = moonList.copy()
-    for c in comb:
-        updateVel(moonList[c[0]], moonList[c[1]])
+# axis is eiher x ,y ,z represented with 0, 1, 2
+def calcTotCycles(moonList):
+    prevX, prevY, prevZ = set()
+    while True:
+        comb = combinations(range(len(moonList)), 2)
+        # apply the gravity -> velocity is updated
+        for c in comb:
+            applyGravity(moonList[c[0]], moonList[c[1]])
 
-    for moon in moonList:
-        updatePos(moon)
+        for moon in moonList:
+            # update every moons x,y,z position
+            updatePos(moon)
+            
 
-
-    break
+        break
 """
