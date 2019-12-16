@@ -14,6 +14,7 @@ class Computer:
         self.data = defaultdict(int, enumerate(data))
         self.output = []
         self.base = 0
+        self.done = False
 
     def getInd(self, index, mode):  # relative 2 intermediate 1, position 0
         if mode == 0:
@@ -36,7 +37,7 @@ class Computer:
         return param1 * param2
 
     def run(self, input_queue=None):
-        while True:
+        while not self.done:
             instr = self.data[self.ptr]
             opCode = instr % 100
             modeFirst = instr // 100 % 10
@@ -47,6 +48,7 @@ class Computer:
             # print(self.output)
             # print(f"prt: {self.ptr}, instr {instr}, rel ptr: {self.base}")
             if opCode == 99:
+                self.done = True
                 break
             elif opCode == 1:  # addition
                 pos = self.getInd(self.ptr + 3, modeThird)

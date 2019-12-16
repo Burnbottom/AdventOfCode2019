@@ -5,30 +5,39 @@ input = "1,380,379,385,1008,2663,704183,381,1005,381,12,99,109,2664,1102,1,0,383
 input = [int(d) for d in input.split(",")]
 
 
-def createOutput(input):
+def partA(input):
     gen = Computer(input.copy()).run()
-    outputList = []
+    blocks = 0
     while True:
         try:
-            out = next(gen)
-            outputList.append(out)
+            next(gen)
+            next(gen)
+            blockType = next(gen)
+            blocks += blockType == 2
         except:
             break
-    return outputList
+    return blocks
 
 
-def calcBlocks(outputList):
-    count = 0
-    for i in range(0, len(outputList), 3):
-        if outputList[i + 2] == 2:
-            count += 1
-    return count
-
-
-def partA(input):
-    outputList = createOutput(input)
-    count = calcBlocks(outputList)
-    return count
-
-
-print(f"Part A: {partA(input.copy())}")  # 414
+"""
+def partB(input):
+    input[0] = 2
+    ballX = paddleX = None
+    program = Computer(input.copy())
+    gen = program.run()
+    lastPoint = 0
+    while True:
+        try:
+            x = next(gen)
+            y = next(gen)
+            blockType = next(gen)
+            print(f"x: {x}, y {y}, blockType: {blockType}")
+            paddleX = x if blockType == 3 else paddleX
+            ballX = x if blockType == 4 else ballX
+            lastPoint = blockType if (x, y) == (-1, 0) else lastPoint
+        except:
+            break
+    return lastPoint
+"""
+print(f"Part A: {partA(input.copy())}")  # A: 414
+# print(f"Part A: {partA(input.copy())}, part B: {partB(input.copy())}")  # A: 414
