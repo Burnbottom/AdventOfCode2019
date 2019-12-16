@@ -95,21 +95,3 @@ input.close()
 
 a = calctotEnergy(1000, moonList.copy())
 print(f"Part A: {a}")
-
-"""
-# axis is eiher x ,y ,z represented with 0, 1, 2
-def calcTotCycles(moonList):
-    prevX, prevY, prevZ = set()
-    while True:
-        comb = combinations(range(len(moonList)), 2)
-        # apply the gravity -> velocity is updated
-        for c in comb:
-            applyGravity(moonList[c[0]], moonList[c[1]])
-
-        for moon in moonList:
-            # update every moons x,y,z position
-            updatePos(moon)
-            
-
-        break
-"""

@@ -31,21 +31,4 @@ def partA(input):
     return count
 
 
-def partB(input):
-    input[0] = 2
-    tiles = dict()
-    score = 0
-    outputList = []
-
-    gen = Computer(input.copy()).run()
-
-    while True:
-        try:
-            x = next(gen)
-            y = next(gen)
-            score = next(gen)
-        except:
-            break
-
-
 print(f"Part A: {partA(input.copy())}")  # 414
