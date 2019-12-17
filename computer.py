@@ -66,7 +66,7 @@ class Computer:
                 pos = self.getInd(self.ptr + 1, modeFirst)
                 if pos < 0:
                     raise IndexError("Tried to read out of memory")
-                self.data[pos] = input_queue  # input_queue.popleft()
+                self.data[pos] = next(input_queue)  # input_queue.popleft()
                 self.ptr += 2
             elif opCode == 4:  # output
                 pos = self.getInd(self.ptr + 1, modeFirst)
@@ -93,6 +93,7 @@ class Computer:
                 arg1 = self.getVal(self.ptr + 1, modeFirst)
                 arg2 = self.getVal(self.ptr + 2, modeSecond)
                 pos = self.getInd(self.ptr + 3, modeThird)
+                # print("arg", arg1)
                 self.data[pos] = 1 if arg1 < arg2 else 0
                 self.ptr += 4
             elif opCode == 8:  # equal to
