@@ -37,12 +37,6 @@ def partA(incode):
     return (count, board)
 
 
-def findSlope(x1, y1, x2, y2):
-    # y = kx
-    k = (y2 - y1) / (x2 - x1)
-    return k
-
-
 def partB(incode):
     # Where the beam starts to be continuous
     x = 3
@@ -59,8 +53,8 @@ def partB(incode):
 
 
 partB(inputData)
-"""
 resultA = partA(inputData)
-drawBoard(resultA[1])
 print("Part A:", resultA[0])
+"""
+drawBoard(resultA[1])
 """
