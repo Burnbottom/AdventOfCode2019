@@ -24,7 +24,7 @@ def findBasicElement(recepie):
     for key, value in recepie.items():
         for key2 in value:
             if key2 == "ORE":
-                basicElements[key[0]] = key[1]
+                basicElements[key[0]] = (int(key[1]), value[key2])
 
     return basicElements
 
@@ -32,8 +32,8 @@ def findBasicElement(recepie):
 def calcOre(allElem, basicElem):
     totOre = 0
     for basic in basicElem:
-        tmp = math.ceil(int(allElem[basic]) / int(basicElem[basic]))
-        totOre += tmp * int(basicElem[basic])
+        multiplier = math.ceil(int(allElem[basic]) / int(basicElem[basic][0]))
+        totOre += multiplier * int(basicElem[basic][1])
     return totOre
 
 
@@ -46,20 +46,15 @@ def findFuelReq(recepie):
     return tmp
 
 
-def updateMap(elemMap, valueMap):
-    for key, value in valueMap.items():
-        elemMap[key] += value
-        print("key", key, "val:", elemMap[key])
-    return elemMap
-
-
-def expand(fuelReq, recepie, basicElem):
-    tmpCopy = basicElem.copy()
+# X AB need Y A and Z B etc
+def breakDown(recepie, allIngredients, basicElem):
+    print(allIngredients)
     for keyList in recepie:
-        for key in fuelReq:
-            if key in keyList:
-                updateMap(tmpCopy, recepie[keyList])
-    print(tmpCopy)
+        for key in allIngredients:
+            if key not in basicElem.keys() and not key == "ORE":
+                tmpMap = defaultdict(int)
+                print(allIngredients[key])
+    # return output
 
 
 file = open("init14.txt", "r")
@@ -81,9 +76,7 @@ for row in file:
 
 allIngredients = findIngredients(recepie)
 basicElem = findBasicElement(recepie)
-print("all:", allIngredients, "basic:", basicElem)
 fuelReq = findFuelReq(recepie)
-print("fuel req:", fuelReq)
-print("Part A", calcOre(allIngredients, basicElem))
 
-expand(fuelReq, recepie, basicElem)
+breakDown(recepie, allIngredients, basicElem)
+# print("Part A", calcOre(brokenDown, basicElem))

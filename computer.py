@@ -66,7 +66,7 @@ class Computer:
                 pos = self.getInd(self.ptr + 1, modeFirst)
                 if pos < 0:
                     raise IndexError("Tried to read out of memory")
-                self.data[pos] = next(input_queue)  # input_queue.popleft()
+                self.data[pos] = input_queue.popleft()  # next(input_queue)
                 self.ptr += 2
             elif opCode == 4:  # output
                 pos = self.getInd(self.ptr + 1, modeFirst)
